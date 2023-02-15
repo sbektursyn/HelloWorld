@@ -1,6 +1,6 @@
 <script>
   //my demo method===========================
-  export default {
+  /*export default {
     data(){
       return {
         check: false,
@@ -11,18 +11,22 @@
         }
       }
     }
-  }
+  }*/
   //=========================================
-  /*import TodoItem from './TodoItem.vue'
+
   export default {
-    components: { TodoItem },
+    components: { 
+      props: ['title'],
+      emits: ['remove'] 
+    },
     data() {
       return {
         newTodoText: '',
         todos: [
           {
             id: 1,
-            title: 'новая заметка'
+            title: 'новая заметка',
+            isLine: false
           }
         ],
         nextTodoId: 2
@@ -32,18 +36,22 @@
       addNewTodo() {
         this.todos.push({
           id: this.nextTodoId++,
-          title: this.newTodoText
+          title: this.newTodoText,
+          isLine: false
         })
         this.newTodoText = ''
+      },
+      toggle(todo) {
+        todo.isLine = !todo.isLine;
       }
     }
-  }*/
+  }
   
 </script>
 
 <template>
 <!-- stil my method===================================== -->
-  <div class="do">
+  <!-- <div class="do">
 
     <div class="items" v-if="!check">
       <input type="checkbox" name="" class="checkbox" v-model="check"><p class="action">do homework</p>
@@ -61,80 +69,93 @@
       <input type="checkbox" name="" class="checkbox" checked v-model="check2"><p class="action2">do to do list</p>
     </div>
 
-  </div>
+  </div> -->
 <!-- stil my method===================================== -->
-<!-- <form v-on:submit.prevent="addNewTodo">
+  <form v-on:submit.prevent="addNewTodo">
     <input
       v-model="newTodoText"
       id="new-todo"
       placeholder="actions"
+      class="find"
     />
-    <button>Add</button>
+    <button class="add">Add</button>
   </form>
-  <ul>
-    <todo-item
-      v-for="(todo, index) in todos"
-      :key="todo.id"
-      :title="todo.title"
-      @remove="todos.splice(index, 1)"
-    ></todo-item>
-  </ul> -->
+  <ul v-for="(todo, index) in todos">
+    <li :key="todo.id" 
+        :style="{ 'text-decoration': todo.isLine ? 'line-through' : 'none', 'cursor':  'pointer'}"
+        @click="toggle(todo)" >
+        {{todo.title}}
+        <button @click="todos.splice(index, 1)" class="remove">x</button>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
-table{border:1px solid #000; color:#a88;}
-td{border:1px solid #000;}
-
-.do{
-  width: 400px;
-  height: 300px;
-  border:2px solid black;
-  display: flex;
-  flex-direction: column;
+.find{
+  width: 220px;
+  border:none;
+  border-bottom:1px solid #000;
+  margin-left: 25px;
 }
-.checkbox{
-  width: 15px;
-  height: 15px;
-  margin-top: 5px;
+.find:hover{
+  border-radius: 5px;
 }
 
-
-.items{
-  display: flex;
-  flex-direction: row;
-}
-.items2{
-  display: flex;
-  flex-direction: row;
+.add{
+  border:1px solid #888;
+  border-radius: 10px;
+  background: white;
 }
 
-.action{
-  padding-left: 20px;
-}
-.action2{
-  padding-left: 20px;
-  text-decoration: line-through;
+.add:hover{
+  border-color: black;
 }
 
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  top: -10px;
+.add:active{
+  background: #a8a8a8;
 }
 
-h3 {
-  font-size: 1.2rem;
+li{
+  font-style: italic;
+  border-bottom:1px solid black;
+  max-width: 220px;
 }
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
+.remove{
+  border:none;
+  background: white;
+  cursor: pointer;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
