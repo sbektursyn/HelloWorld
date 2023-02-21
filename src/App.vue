@@ -2,12 +2,14 @@
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 import Api from './components/Api.vue'
+import Crud from './components/Crud.vue'
+import Lab from './components/lab.vue'
   
 </script>
 
 <template>
   <div class="wrapper">
-    <Api/>
+    <Crud/>
   </div>
 </template>
 
